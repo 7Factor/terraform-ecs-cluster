@@ -24,7 +24,10 @@ resource "aws_launch_configuration" "ecs_container_instance" {
   image_id             = "${data.aws_ami.aws_linux_ecs.id}"
   iam_instance_profile = "${aws_iam_instance_profile.ecs_for_ec2_profile.id}"
 
-  security_groups = ["${var.utility_accessible_sg}"]
+  security_groups = [
+    "${aws_security_group.ecs_boxes.id}",
+    "${var.utility_accessible_sg}"
+  ]
 
   user_data = <<EOF
 #!/bin/bash

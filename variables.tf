@@ -4,6 +4,10 @@ variable "region" {
   description = "The region of your infrastructure. Defaults to us-east-1."
 }
 
+variable "vpc_id" {
+  description = "The id of your vpc."
+}
+
 variable "utility_accessible_sg" {
   description = "Pass in the ID of your access security group here."
 }
