@@ -1,0 +1,8 @@
+.terraform
+terraform.tfstate.backup
+*.tfvars
+.vscode
+keys
+.idea
+vars
+backends
