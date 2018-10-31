@@ -14,4 +14,3 @@
 * max_size - The maximum number of container instances the asg will maintain.
 * health_check_grace_period - Time in seconds after instance comes into service before checking health. Defaults to 300.
 * env - Tags relevant resources with your env. You should set this to 'stage' or 'prod'.
-* service_name - Will apply your service name to tags on relevant resources.

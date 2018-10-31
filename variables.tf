@@ -47,7 +47,3 @@ variable "health_check_grace_period" {
 variable "env" {
   description = "Tags relevant resources with your env. You should set this to 'stage' or 'prod'."
 }
-
-variable "service_name" {
-  description = "Will apply your service name to tags on relevant resources."
-}
