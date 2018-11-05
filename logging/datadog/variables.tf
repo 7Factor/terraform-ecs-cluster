@@ -10,7 +10,7 @@ variable "ecs_cluster" {
 
 variable "desired_task_count" {
   default     = 1
-  description = "The desired number of tasks for the service to keep running. Defaults to two."
+  description = "The desired number of tasks for the service to keep running. Defaults to one."
 }
 
 // tags
