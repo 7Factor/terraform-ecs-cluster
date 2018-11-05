@@ -51,3 +51,5 @@ variable "health_check_grace_period" {
 variable "env" {
   description = "Tags relevant resources with your env. You should set this to 'stage' or 'prod'."
 }
+
+variable "fluentd_docker_image" {}
