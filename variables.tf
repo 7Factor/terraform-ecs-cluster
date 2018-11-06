@@ -53,3 +53,8 @@ variable "env" {
 }
 
 variable "fluentd_docker_image" {}
+
+variable "ecs_logging" {
+  default     = "[\\\"json-file\\\",\\\"awslogs\\\"]"
+  description = "Adding logging option to ECS that the Docker containers can use. It is possible to add fluentd as well"
+}
