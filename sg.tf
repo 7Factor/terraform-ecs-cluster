@@ -18,7 +18,7 @@ resource "aws_security_group" "ecs_web_lb" {
   }
 
   tags {
-    Name = "ECS Web ALB"
+    Name    = "ECS Web ALB"
     Cluster = "ECSCluster"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_security_group" "ecs_boxes" {
   }
 
   tags {
-    Name = "ECS Boxes"
+    Name    = "ECS Boxes"
     Cluster = "ECSCluster"
   }
 }

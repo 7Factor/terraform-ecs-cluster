@@ -26,12 +26,13 @@ resource "aws_launch_configuration" "ecs_container_instance" {
 
   security_groups = [
     "${aws_security_group.ecs_boxes.id}",
-    "${var.utility_accessible_sg}"
+    "${var.utility_accessible_sg}",
   ]
 
   user_data = <<EOF
 #!/bin/bash
 sudo /bin/su -c 'echo ECS_CLUSTER=${aws_ecs_cluster.base_cluster.name} >> /etc/ecs/ecs.config'
+sudo /bin/su -c 'echo ECS_AVAILABLE_LOGGING_DRIVERS="${var.ecs_logging}" >> /etc/ecs/ecs.config'
 EOF
 }
 
