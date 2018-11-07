@@ -5,6 +5,11 @@
     "cpu": 10,
     "memory": 256,
     "essential": true,
+    "portMappings": [
+      {
+        "hostPort": 8126
+      }
+    ],
     "mountPoints": [
       {
         "containerPath": "/var/run/docker.sock",
@@ -30,6 +35,10 @@
       {
         "name": "SD_BACKEND",
         "value": "docker"
+      },
+      {
+        "name": "DD_APM_NON_LOCAL_TRAFFIC",
+        "value": true
       }
     ]
   }

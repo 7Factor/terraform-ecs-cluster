@@ -15,7 +15,8 @@ module "datadog" {
   dd_agent_api_key = "${var.dd_agent_api_key}"
 
   // ecs service config
-  ecs_cluster        = "${aws_ecs_cluster.base_cluster.name}"
+  ecs_cluster = "${aws_ecs_cluster.base_cluster.name}"
+
   // spin up exactly one dd-agent container per asg instance
   desired_task_count = "${aws_autoscaling_group.ecs_asg.desired_capacity}"
 
