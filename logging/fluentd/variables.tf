@@ -7,8 +7,6 @@ variable "desired_capacity" {
   description = "The number of EC2 instances for the ECS cluster."
 }
 
-variable "ecs_cluster" {
-}
+variable "ecs_cluster" {}
 
-variable "fluentd_docker_image" {
-}
+variable "fluentd_docker_image" {}

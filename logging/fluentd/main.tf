@@ -1,5 +1,6 @@
 resource "aws_ecs_task_definition" "fluentd_task" {
-  family                   = "fluentd-task"
+  family = "fluentd-task"
+
   container_definitions = <<DEFINITION
 [
   {
@@ -20,11 +21,12 @@ DEFINITION
 }
 
 resource "aws_ecs_service" "fluentd_service" {
-  name = "fluentd-service"
+  name            = "fluentd-service"
   task_definition = "${aws_ecs_task_definition.fluentd_task.arn}"
-  cluster = "${var.ecs_cluster}"
-  desired_count = "${var.desired_capacity}"
-  launch_type = "EC2"
+  cluster         = "${var.ecs_cluster}"
+  desired_count   = "${var.desired_capacity}"
+  launch_type     = "EC2"
+
   placement_constraints = {
     type = "distinctInstance"
   }
