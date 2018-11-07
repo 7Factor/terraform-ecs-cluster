@@ -4,9 +4,9 @@ resource "aws_security_group" "ecs_web_lb" {
   vpc_id      = "${var.vpc_id}"
 
   ingress {
-    protocol    = "tcp"
     from_port   = "80"
     to_port     = "80"
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -29,16 +29,16 @@ resource "aws_security_group" "ecs_boxes" {
   vpc_id      = "${var.vpc_id}"
 
   ingress {
-    protocol        = "tcp"
-    from_port       = "80"
-    to_port         = "80"
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
     security_groups = ["${aws_security_group.ecs_web_lb.id}"]
   }
 
   egress {
-    protocol    = "-1"
     from_port   = 0
     to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
