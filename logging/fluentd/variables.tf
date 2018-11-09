@@ -9,4 +9,4 @@ variable "desired_capacity" {
 
 variable "ecs_cluster" {}
 
-variable "fluentd_docker_image" {}
+variable "ecs_role" {}
