@@ -7,6 +7,7 @@
     "essential": true,
     "portMappings": [
       {
+        "containerPort": 8126,
         "hostPort": 8126
       }
     ],
@@ -38,7 +39,11 @@
       },
       {
         "name": "DD_APM_NON_LOCAL_TRAFFIC",
-        "value": true
+        "value": "true"
+      },
+      {
+        "name": "DD_APM_ENABLED",
+        "value": "true"
       }
     ]
   }

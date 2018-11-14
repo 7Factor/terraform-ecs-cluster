@@ -22,7 +22,7 @@ resource "aws_ecs_task_definition" "datadog_task" {
 
   volume {
     name      = "cgroup"
-    host_path = "/cgroup/"
+    host_path = "/sys/fs/cgroup/"
   }
 }
 
