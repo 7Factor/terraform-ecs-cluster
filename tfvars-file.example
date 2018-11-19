@@ -1,0 +1,28 @@
+#####################
+# ECS MODULE CONFIG #
+#####################
+region = "us-east-1"
+vpc_id = "vpc-xxxxVPC_IDxxxx""
+
+ecs_cluster = "base-cluster" # Your ECS cluster name
+instance_type = "t2.medium"
+key_name = "YOUR ECS KEY VALUE PAIR"
+desired_capacity = 2 # Desired number of EC2 instances for autoscaling.
+min_size = 2 # Minimum number of EC2 instances for autoscaling
+max_size = 3 # Maximum number of EC2 instances for autoscaling
+
+asg_subnets = ["subnet-xxxxSUBNET1_IDxxxx", "subnet-xxxxSUBNET2_IDxxxx"] # The subnets to place your EC2 instances in.
+utility_accessible_sg = "sg-xxxxSG_IDxxxx" # The security group that can SSH into your EC2 instances.
+
+env = "stage" # The development environment. Used for naming some resources.
+
+fluentd_docker_image = "fluent/fluentd"
+ecs_logging = "[\\\"json-file\\\",\\\"awslogs\\\",\\\"fluentd\\\"]" # Define what sort of logging options are available for your EC2 instances.
+
+######################
+# DATADOG CONFIG #
+######################
+
+dd_agent_api_key = "" # Your datadog API key
+
+desired_task_count = 1 # No longer used. Delete
