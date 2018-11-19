@@ -25,4 +25,3 @@ ecs_logging = "[\\\"json-file\\\",\\\"awslogs\\\",\\\"fluentd\\\"]" # Define wha
 
 dd_agent_api_key = "" # Your datadog API key
 
-desired_task_count = 1 # No longer used. Delete

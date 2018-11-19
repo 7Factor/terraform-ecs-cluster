@@ -85,9 +85,9 @@ DEFINITION
 }
 
 resource "aws_ecs_service" "fluentd_service" {
-  name            = "fluentd-service"
-  task_definition = "${aws_ecs_task_definition.fluentd_task.arn}"
-  cluster         = "${var.ecs_cluster}"
-  launch_type     = "EC2"
+  name                = "fluentd-service"
+  task_definition     = "${aws_ecs_task_definition.fluentd_task.arn}"
+  cluster             = "${var.ecs_cluster}"
+  launch_type         = "EC2"
   scheduling_strategy = "DAEMON"
 }
