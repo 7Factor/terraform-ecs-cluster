@@ -28,13 +28,8 @@ resource "aws_ecs_task_definition" "datadog_task" {
 
 resource "aws_ecs_service" "datadog_service" {
   name                = "datadog-service"
+  cluster             = "${var.ecs_cluster}"
   task_definition     = "${aws_ecs_task_definition.datadog_task.arn}"
-  desired_count       = "${var.desired_task_count}"
   launch_type         = "EC2"
   scheduling_strategy = "DAEMON"
-  cluster             = "${var.ecs_cluster}"
-
-  placement_constraints {
-    type = "distinctInstance"
-  }
 }
