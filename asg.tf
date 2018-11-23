@@ -17,6 +17,19 @@ data "aws_ami" "aws_linux_ecs" {
   }
 }
 
+data "template_file" "ecs_cluster_template" {
+  template = <<EOF
+#!/bin/bash
+sudo /bin/su -c 'echo ECS_CLUSTER=${cluster_name} >> /etc/ecs/ecs.config'
+sudo /bin/su -c 'echo ECS_AVAILABLE_LOGGING_DRIVERS="${logging}" >> /etc/ecs/ecs.config'
+EOF
+
+  vars {
+    cluster_name = "${aws_ecs_cluster.base_cluster.name}"
+    logging      = "${var.ecs_logging}"
+  }
+}
+
 resource "aws_launch_template" "ecs_container_template" {
   name          = "${var.env}-ecs-asg"
   instance_type = "${var.instance_type}"
@@ -28,11 +41,7 @@ resource "aws_launch_template" "ecs_container_template" {
     "${var.utility_accessible_sg}",
   ]
 
-  user_data = <<EOF
-#!/bin/bash
-sudo /bin/su -c 'echo ECS_CLUSTER=${aws_ecs_cluster.base_cluster.name} >> /etc/ecs/ecs.config'
-sudo /bin/su -c 'echo ECS_AVAILABLE_LOGGING_DRIVERS="${var.ecs_logging}" >> /etc/ecs/ecs.config'
-EOF
+  user_data = "${base64encode(data.template_file.ecs_cluster_template.rendered)}"
 
   iam_instance_profile {
     name = "${aws_iam_instance_profile.ecs_for_ec2_profile.id}"
