@@ -2,6 +2,7 @@
 module "fluentd" {
   source = "./logging/fluentd"
 
+  fluentd_bucket_name = "${var.fluentd_bucket_name}"
   ecs_cluster = "${aws_ecs_cluster.base_cluster.name}"
   ecs_role    = "${aws_iam_role.ecs_for_ec2_role.id}"
 }

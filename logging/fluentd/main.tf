@@ -3,7 +3,7 @@ resource "aws_ecr_repository" "fluentd" {
 }
 
 resource "aws_s3_bucket" "ecs_fluentd_logs_bucket" {
-  bucket = "cc2dev-ecs-fluentd-logs"
+  bucket = "${var.fluentd_bucket_name}"
   acl    = "private"
 
   tags {

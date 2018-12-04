@@ -16,7 +16,7 @@ utility_accessible_sg = "sg-xxxxSG_IDxxxx" # The security group that can SSH int
 
 env = "stage" # The development environment. Used for naming some resources.
 
-fluentd_docker_image = "fluent/fluentd"
+fluentd_bucket_name = "yourfluentdbucketnamehere"
 ecs_logging = "[\\\"json-file\\\",\\\"awslogs\\\",\\\"fluentd\\\"]" # Define what sort of logging options are available for your EC2 instances.
 
 ######################
