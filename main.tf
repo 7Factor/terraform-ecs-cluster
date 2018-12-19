@@ -1,6 +1,6 @@
 # Comment this out if you're not using fluentd
 module "fluentd" {
-  source = "./logging/fluentd"
+  source = "github.com/SummitResources/terraform-fluentd"
 
   fluentd_bucket_name = "${var.fluentd_bucket_name}"
   ecs_cluster = "${aws_ecs_cluster.base_cluster.name}"
@@ -9,7 +9,7 @@ module "fluentd" {
 
 # Comment this out if you're not using datadog
 module "datadog" {
-  source = "./logging/datadog"
+  source = "github.com/SummitResources/terraform-datadog"
 
   dd_agent_api_key = "${var.dd_agent_api_key}"
   ecs_cluster      = "${aws_ecs_cluster.base_cluster.name}"
