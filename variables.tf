@@ -8,6 +8,11 @@ variable "vpc_id" {
   description = "The id of your vpc."
 }
 
+variable "ecs_cluster_name" {
+  default     = "base-cluster"
+  description = "The name of your ECS cluster."
+}
+
 variable "utility_accessible_sg" {
   description = "Pass in the ID of your access security group here."
 }
