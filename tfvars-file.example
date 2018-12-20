@@ -16,12 +16,5 @@ utility_accessible_sg = "sg-xxxxSG_IDxxxx" # The security group that can SSH int
 
 env = "stage" # The development environment. Used for naming some resources.
 
-fluentd_bucket_name = "yourfluentdbucketnamehere"
 ecs_logging = "[\\\"json-file\\\",\\\"awslogs\\\",\\\"fluentd\\\"]" # Define what sort of logging options are available for your EC2 instances.
-
-######################
-# DATADOG CONFIG #
-######################
-
-dd_agent_api_key = "" # Your datadog API key
 
