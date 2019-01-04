@@ -1,22 +1,3 @@
-data "aws_ami" "aws_linux_ecs" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-ecs-hvm-*-x86_64-ebs"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  filter {
-    name   = "owner-alias"
-    values = ["amazon"]
-  }
-}
-
 data "template_file" "ecs_cluster_template" {
   template = <<EOF
 #!/bin/bash
@@ -88,4 +69,20 @@ resource "aws_autoscaling_group" "ecs_asg" {
     value               = "${var.env}"
     propagate_at_launch = true
   }
+}
+
+resource "aws_autoscaling_policy" "scale_up" {
+  name                   = "ecs-${var.env}-instances-scale-up"
+  scaling_adjustment     = 1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = "${aws_autoscaling_group.ecs_asg.name}"
+}
+
+resource "aws_autoscaling_policy" "scale_down" {
+  name                   = "ecs-${var.env}-instances-scale-down"
+  scaling_adjustment     = -1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 300
+  autoscaling_group_name = "${aws_autoscaling_group.ecs_asg.name}"
 }
