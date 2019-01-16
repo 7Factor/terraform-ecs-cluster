@@ -1,16 +1,37 @@
-# Base ECS Cluster
+# ECS Cluster via Terraform
 
-## This repo contains terraform that creates a base esc cluster managed by an asg.
+This module will allow you to deploy an ECS Cluster composed of raw EC2 instances that are managed by an Auto Scaling Group.
+From here you can bring in your own modules to deploy ECS Services and task definitions, or you can use 
+[ours.](https://github.com/7Factor/terraform-ecs-task) Though you can run this on its own, we recommend running it together
+with all of the modules you need for your CI/CD solution as part of a complete assembly line style process.
 
-### Variable Reference
+## Prerequisites
 
-* region - The region of your infrastructure. Defaults to us-east-1.
-* utility_accessible_sg - Pass in the ID of your access security group here.
-* asg_subnets - The list of subnet IDs the ASG will launch instances into. These should be private.
-* instance_type - The type of ec2 container instance the asg will create. Defaults to t2.micro.
-* key_name - The name of your pem key that will be associated with the ec2 container instances.
-* desired_capacity - The target number of container instances for the asg.
-* min_size - The minimum number of container instances the asg will maintain.
-* max_size - The maximum number of container instances the asg will maintain.
-* health_check_grace_period - Time in seconds after instance comes into service before checking health. Defaults to 300.
-* env - Tags relevant resources with your env. You should set this to 'stage' or 'prod'.
+First, you need a decent understanding of how to use Terraform. [Hit the docs](https://www.terraform.io/intro/index.html) for that.
+Then, you should familiarize yourself with ECS [concepts](https://aws.amazon.com/ecs/getting-started/), especially if you've 
+never worked with a clustering solution before. Once you're good, import this module and 
+pass the appropriate variables. Then, plan your run and deploy.
+
+## Example Usage
+
+**NOTE**
+If you wish to hook in logging middleware such as [fluentd](https://www.fluentd.org/), you must pass the necessary params
+to `ecs_logging`. Check out our [fluentd module](https://github.com/7Factor/terraform-ecs-fluentd) to see how we terraform
+fluentd and for more information on how all the pipes connect together.
+
+```hcl-terraform
+module "ecs_cluster" {
+  source = "git@github.com:7Factor/terraform-ecs-cluster.git"
+
+  vpc_id                = "${var.vpc_id}"
+  utility_accessible_sg = "${var.utility_accessible_sg}"
+  asg_subnets           = "${var.web_private_subnets}"
+  key_name              = "${var.ecs_key_name}"
+  env                   = "${var.env}"
+  instance_type         = "t2.medium"
+  ecs_logging           = "[\\\"json-file\\\",\\\"awslogs\\\",\\\"fluentd\\\"]"
+  desired_capacity      = 2
+  min_size              = 2
+  max_size              = 4
+}
+```
