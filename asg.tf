@@ -16,7 +16,6 @@ resource "aws_launch_template" "ecs_container_template" {
   instance_type = "${var.instance_type}"
   key_name      = "${var.key_name}"
   image_id      = "${data.aws_ami.aws_linux_ecs.id}"
-  ebs_optimized = true
 
   vpc_security_group_ids = [
     "${aws_security_group.ecs_boxes.id}",
