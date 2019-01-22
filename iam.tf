@@ -1,10 +1,10 @@
-resource "aws_iam_instance_profile" "ecs_for_ec2_profile" {
-  name = "ecsForEc2Profile"
-  role = "${aws_iam_role.ecs_for_ec2_role.name}"
+resource "aws_iam_instance_profile" "ecs_profile" {
+  name = "ecs_cluster_profile"
+  role = "${aws_iam_role.ecs_role.name}"
 }
 
-resource "aws_iam_role" "ecs_for_ec2_role" {
-  name = "ecsInstanceRole"
+resource "aws_iam_role" "ecs_role" {
+  name = "ECSInstance"
 
   assume_role_policy = <<EOF
 {
@@ -23,8 +23,10 @@ resource "aws_iam_role" "ecs_for_ec2_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_for_ec2_role_policy_attachment" {
-  role       = "${aws_iam_role.ecs_for_ec2_role.name}"
+# We don't do a data lookup here because the data element requires an ARN,
+# which would just be redundant and dumb.
+resource "aws_iam_role_policy_attachment" "ecs_role_policy_attachment" {
+  role       = "${aws_iam_role.ecs_role.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
 

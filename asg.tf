@@ -16,6 +16,7 @@ resource "aws_launch_template" "ecs_container_template" {
   instance_type = "${var.instance_type}"
   key_name      = "${var.key_name}"
   image_id      = "${data.aws_ami.aws_linux_ecs.id}"
+  ebs_optimized = true
 
   vpc_security_group_ids = [
     "${aws_security_group.ecs_boxes.id}",
@@ -25,7 +26,7 @@ resource "aws_launch_template" "ecs_container_template" {
   user_data = "${base64encode(data.template_file.ecs_cluster_template.rendered)}"
 
   iam_instance_profile {
-    name = "${aws_iam_instance_profile.ecs_for_ec2_profile.id}"
+    name = "${aws_iam_instance_profile.ecs_profile.id}"
   }
 
   lifecycle {
@@ -48,6 +49,8 @@ resource "aws_autoscaling_group" "ecs_asg" {
     version = "$$Latest"
   }
 
+  depends_on = ["aws_launch_template.ecs_container_template"]
+
   lifecycle {
     create_before_destroy = true
   }
@@ -55,18 +58,6 @@ resource "aws_autoscaling_group" "ecs_asg" {
   tag {
     key                 = "Name"
     value               = "ECS Instance"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Cluster"
-    value               = "Base ECS Instances"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Environment"
-    value               = "${var.env}"
     propagate_at_launch = true
   }
 }
