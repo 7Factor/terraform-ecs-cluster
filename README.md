@@ -2,7 +2,7 @@
 
 This module will allow you to deploy an ECS Cluster composed of raw EC2 instances that are managed by an Auto Scaling Group.
 From here you can bring in your own modules to deploy ECS Services and task definitions, or you can use 
-[ours.](https://github.com/7Factor/terraform-ecs-task) Though you can run this on its own, we recommend running it together
+[ours.](https://github.com/7Factor/terraform-ecs-http-task) Though you can run this on its own, we recommend running it together
 with all of the modules you need for your CI/CD solution as part of a complete assembly line style process.
 
 ## Prerequisites
