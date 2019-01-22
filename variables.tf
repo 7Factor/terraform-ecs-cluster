@@ -9,7 +9,6 @@ variable "vpc_id" {
 }
 
 variable "ecs_cluster_name" {
-  default     = "base-cluster"
   description = "The name of your ECS cluster."
 }
 
