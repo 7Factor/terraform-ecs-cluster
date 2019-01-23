@@ -47,12 +47,12 @@ resource "aws_security_group" "ecs_boxes" {
 }
 
 resource "aws_security_group_rule" "allow_lb_access_rule" {
-    from_port       = 0
-  type = "ingress"
-    to_port         = 0
-    protocol        = "-1"
-    security_group_id = "${aws_security_group.ecs_boxes}"
-    security_groups = ["${aws_security_group.ecs_web_lb.id}"]
+  from_port         = 0
+  type              = "ingress"
+  to_port           = 0
+  protocol          = "-1"
+  security_group_id = "${aws_security_group.ecs_boxes}"
+  security_groups   = ["${aws_security_group.ecs_web_lb.id}"]
 
   depends_on = ["aws_security_group.ecs_boxes", "aws_security_group.ecs_web_lb"]
 }
