@@ -25,8 +25,7 @@ resource "aws_security_group" "ecs_web_lb" {
   }
 
   tags {
-    Name    = "ECS Web ALB"
-    Cluster = "ECSCluster"
+    Name = "Allow Load Balancer ECS Access"
   }
 }
 
@@ -50,7 +49,6 @@ resource "aws_security_group" "ecs_boxes" {
   }
 
   tags {
-    Name    = "ECS Boxes"
-    Cluster = "ECSCluster"
+    Name = "ECS Cluster Instances"
   }
 }
