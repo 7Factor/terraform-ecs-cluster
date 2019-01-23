@@ -1,20 +1,20 @@
 resource "aws_security_group" "ecs_web_lb" {
   name        = "ecs-lb-sg-${var.region}"
-  description = "Opens up web ALB to the internet on ports 80 and 443."
+  description = "Opens up web ALB on ports 80 and 443."
   vpc_id      = "${var.vpc_id}"
 
   ingress {
     from_port   = "443"
     to_port     = "443"
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.lb_ingress_cidr}"]
   }
 
   ingress {
     from_port   = "80"
     to_port     = "80"
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.lb_ingress_cidr}"]
   }
 
   egress {
