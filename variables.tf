@@ -1,9 +1,4 @@
 // networking config
-variable "region" {
-  default     = "us-east-1"
-  description = "The region of your infrastructure. Defaults to us-east-1."
-}
-
 variable "vpc_id" {
   description = "The id of your vpc."
 }
