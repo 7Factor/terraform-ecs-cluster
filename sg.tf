@@ -1,5 +1,5 @@
 resource "aws_security_group" "ecs_web_lb" {
-  name        = "ecs-lb-sg-${var.region}"
+  name        = "ecs-lb-sg"
   description = "Opens up web ALB on ports 80 and 443."
   vpc_id      = "${var.vpc_id}"
 
@@ -30,7 +30,7 @@ resource "aws_security_group" "ecs_web_lb" {
 }
 
 resource "aws_security_group" "ecs_boxes" {
-  name        = "ecs-tasks-sg-${var.region}"
+  name        = "ecs-tasks-sg"
   description = "Allow inbound access from the Web ALB only."
   vpc_id      = "${var.vpc_id}"
 
