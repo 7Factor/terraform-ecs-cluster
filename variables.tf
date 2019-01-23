@@ -21,6 +21,11 @@ variable "asg_subnets" {
   description = "The list of subnet IDs the ASG will launch instances into. These should be private."
 }
 
+variable "lb_ingress_cidr" {
+  default     = "0.0.0.0/0"
+  description = "CIDR to allow access to this load balancer. Allows white listing of IPs if you need that kind of thing, otherwise it just defaults to erebody."
+}
+
 // auto scaling group config
 variable "instance_type" {
   default     = "t2.micro"
