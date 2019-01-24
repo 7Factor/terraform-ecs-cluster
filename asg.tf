@@ -6,7 +6,7 @@ sudo /bin/su -c 'echo ECS_AVAILABLE_LOGGING_DRIVERS="$${logging}" >> /etc/ecs/ec
 EOF
 
   vars {
-    cluster_name = "${aws_ecs_cluster.base_cluster.name}"
+    cluster_name = "${aws_ecs_cluster.the_cluster.name}"
     logging      = "${var.ecs_logging}"
   }
 }

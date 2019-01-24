@@ -12,7 +12,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_asg_instances_cpu_high" {
   alarm_actions       = ["${aws_autoscaling_policy.scale_up.arn}"]
 
   dimensions {
-    ClusterName = "${aws_ecs_cluster.base_cluster.name}"
+    ClusterName = "${aws_ecs_cluster.the_cluster.name}"
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_asg_instances_cpu_low" {
   alarm_actions       = ["${aws_autoscaling_policy.scale_down.arn}"]
 
   dimensions {
-    ClusterName = "${aws_ecs_cluster.base_cluster.name}"
+    ClusterName = "${aws_ecs_cluster.the_cluster.name}"
   }
 }
 
@@ -48,7 +48,7 @@ resource "aws_cloudwatch_metric_alarm" "ecs_asg_instances_memory_high" {
   alarm_actions       = ["${aws_autoscaling_policy.scale_down.arn}"]
 
   dimensions {
-    ClusterName = "${aws_ecs_cluster.base_cluster.name}"
+    ClusterName = "${aws_ecs_cluster.the_cluster.name}"
   }
 }
 
@@ -66,6 +66,6 @@ resource "aws_cloudwatch_metric_alarm" "ecs_asg_instances_memory_low" {
   alarm_actions       = ["${aws_autoscaling_policy.scale_down.arn}"]
 
   dimensions {
-    ClusterName = "${aws_ecs_cluster.base_cluster.name}"
+    ClusterName = "${aws_ecs_cluster.the_cluster.name}"
   }
 }
