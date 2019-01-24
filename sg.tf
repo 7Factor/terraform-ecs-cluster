@@ -1,6 +1,6 @@
 resource "aws_security_group" "ecs_web_lb" {
-  name        = "ecs-lb-sg"
-  description = "Opens up web ALB on ports 80 and 443."
+  name        = "${var.ecs_cluster_name}-ecs-lb-sg"
+  description = "Assign this SG to your LBs to allow ECS health checking."
   vpc_id      = "${var.vpc_id}"
 
   ingress {
