@@ -1,5 +1,5 @@
 resource "aws_security_group" "ecs_web_lb" {
-  name        = "${var.ecs_cluster_name}-ecs-lb-sg"
+  name        = "${var.ecs_cluster_name}-ecs-access-sg"
   description = "Assign this SG to your LBs to allow ECS health checking."
   vpc_id      = "${var.vpc_id}"
 
@@ -30,7 +30,7 @@ resource "aws_security_group" "ecs_web_lb" {
 }
 
 resource "aws_security_group" "ecs_boxes" {
-  name        = "ecs-tasks-sg"
+  name        = "{var.ecs_cluster_name}-ecs-sg"
   description = "Allow inbound access from the Web ALB only."
   vpc_id      = "${var.vpc_id}"
 
