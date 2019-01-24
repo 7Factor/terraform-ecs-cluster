@@ -12,7 +12,7 @@ EOF
 }
 
 resource "aws_launch_template" "ecs_container_template" {
-  name          = "${var.env}-ecs-asg"
+  name          = "${var.ecs_cluster_name}-asg"
   instance_type = "${var.instance_type}"
   key_name      = "${var.key_name}"
   image_id      = "${data.aws_ami.aws_linux_ecs.id}"
@@ -34,7 +34,7 @@ resource "aws_launch_template" "ecs_container_template" {
 }
 
 resource "aws_autoscaling_group" "ecs_asg" {
-  name = "${var.env}-ecs-asg-tmpl${aws_launch_template.ecs_container_template.latest_version}"
+  name = "${var.ecs_cluster_name}-asg-tmpl-${aws_launch_template.ecs_container_template.latest_version}"
 
   health_check_grace_period = "${var.health_check_grace_period}"
   health_check_type         = "EC2"
@@ -62,7 +62,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
 }
 
 resource "aws_autoscaling_policy" "scale_up" {
-  name                   = "ecs-${var.env}-instances-scale-up"
+  name                   = "ecs-instances-scale-up"
   scaling_adjustment     = 1
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
@@ -70,7 +70,7 @@ resource "aws_autoscaling_policy" "scale_up" {
 }
 
 resource "aws_autoscaling_policy" "scale_down" {
-  name                   = "ecs-${var.env}-instances-scale-down"
+  name                   = "ecs-instances-scale-down"
   scaling_adjustment     = -1
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300

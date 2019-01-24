@@ -27,7 +27,6 @@ module "ecs_cluster" {
   utility_accessible_sg = "${var.utility_accessible_sg}"
   asg_subnets           = "${var.web_private_subnets}"
   key_name              = "${var.ecs_key_name}"
-  env                   = "${var.env}"
   instance_type         = "t2.medium"
   ecs_logging           = "[\\\"json-file\\\",\\\"awslogs\\\",\\\"fluentd\\\"]"
   desired_capacity      = 2

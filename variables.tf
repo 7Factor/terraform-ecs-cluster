@@ -51,11 +51,6 @@ variable "health_check_grace_period" {
   description = "Time in seconds after instance comes into service before checking health. Defaults to 300."
 }
 
-// tags
-variable "env" {
-  description = "Tags relevant resources with your env. You should set this to 'stage' or 'prod'."
-}
-
 variable "ecs_logging" {
   default     = "[\\\"json-file\\\",\\\"awslogs\\\"]"
   description = "Adding logging option to ECS that the Docker containers can use. It is possible to add fluentd as well"
