@@ -1,4 +1,4 @@
-resource "aws_security_group" "ecs_web_lb" {
+resource "aws_security_group" "ecs_accessible_sg" {
   name        = "${var.ecs_cluster_name}-ecs-access-sg"
   description = "Assign this SG to your LBs to allow ECS health checking."
   vpc_id      = "${var.vpc_id}"
@@ -34,13 +34,6 @@ resource "aws_security_group" "ecs_boxes" {
   description = "Allow inbound access from the Web ALB only."
   vpc_id      = "${var.vpc_id}"
 
-  ingress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    security_groups = ["${aws_security_group.ecs_web_lb.id}"]
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -51,4 +44,15 @@ resource "aws_security_group" "ecs_boxes" {
   tags {
     Name = "ECS Cluster Instances"
   }
+}
+
+resource "aws_security_group_rule" "allow_lb_access_rule" {
+  from_port         = 0
+  type              = "ingress"
+  to_port           = 0
+  protocol          = "-1"
+  security_group_id = "${aws_security_group.ecs_accessible_sg}"
+  security_groups   = ["${aws_security_group.ecs_boxes.id}"]
+
+  depends_on = ["aws_security_group.ecs_accessible_sg", "aws_security_group.ecs_boxes"]
 }
