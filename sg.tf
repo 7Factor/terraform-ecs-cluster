@@ -30,7 +30,7 @@ resource "aws_security_group" "ecs_accessible_sg" {
 }
 
 resource "aws_security_group" "ecs_boxes" {
-  name        = "{var.ecs_cluster_name}-ecs-sg"
+  name        = "${var.ecs_cluster_name}-ecs-sg"
   description = "Allow inbound access from the Web ALB only."
   vpc_id      = "${var.vpc_id}"
 
