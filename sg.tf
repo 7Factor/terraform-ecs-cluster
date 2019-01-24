@@ -51,8 +51,8 @@ resource "aws_security_group_rule" "allow_lb_access_rule" {
   type                     = "ingress"
   to_port                  = 0
   protocol                 = "-1"
-  security_group_id        = "${aws_security_group.ecs_accessible_sg.id}"
-  source_security_group_id = "${aws_security_group.ecs_boxes.id}"
+  security_group_id        = "${aws_security_group.ecs_boxes.id}"
+  source_security_group_id = "${aws_security_group.ecs_accessible_sg.id}"
 
   depends_on = ["aws_security_group.ecs_accessible_sg", "aws_security_group.ecs_boxes"]
 }
