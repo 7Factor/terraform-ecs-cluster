@@ -1,5 +1,5 @@
 resource "aws_iam_instance_profile" "ecs_profile" {
-  name = "ecs_cluster_profile"
+  name = "${var.ecs_cluster_name}-profile"
   role = "${aws_iam_role.ecs_role.name}"
 }
 
