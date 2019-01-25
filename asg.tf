@@ -59,6 +59,12 @@ resource "aws_autoscaling_group" "ecs_asg" {
     value               = "ECS Instance"
     propagate_at_launch = true
   }
+
+  tag {
+    key                 = "Cluster"
+    value               = "${var.ecs_cluster_name}"
+    propagate_at_launch = true
+  }
 }
 
 resource "aws_autoscaling_policy" "scale_up" {
