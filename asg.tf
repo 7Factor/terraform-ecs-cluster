@@ -3,6 +3,7 @@ data "template_file" "ecs_cluster_template" {
 #!/bin/bash
 sudo /bin/su -c 'echo ECS_CLUSTER=$${cluster_name} >> /etc/ecs/ecs.config'
 sudo /bin/su -c 'echo ECS_AVAILABLE_LOGGING_DRIVERS="$${logging}" >> /etc/ecs/ecs.config'
+${var.asg_user_data}
 EOF
 
   vars {
