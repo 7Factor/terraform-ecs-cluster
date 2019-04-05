@@ -7,3 +7,7 @@ output "asg" {
   value       = "${aws_autoscaling_group.ecs_asg.id}"
   description = "The ID of the ASG that controls the cluster. Use this to add your own scaling policies ad-hoc."
 }
+
+output "ecs_access_sg_id" {
+  value = "${aws_security_group.ecs_accessible_sg.id}"
+}
