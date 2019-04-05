@@ -8,6 +8,12 @@ output "asg" {
   description = "The ID of the ASG that controls the cluster. Use this to add your own scaling policies ad-hoc."
 }
 
-output "ecs_access_sg_id" {
-  value = "${aws_security_group.ecs_accessible_sg.id}"
+output "ecs_lb_sg_id" {
+  value       = "${aws_security_group.ecs_accessible_sg.id}"
+  description = "The ID of the security group to attach to load balancers for health checks."
+}
+
+output "ecs_sg_id" {
+  value       = "${aws_security_group.ecs_boxes.id}"
+  description = "the ID of the security group that's attached to all ECS instances."
 }
