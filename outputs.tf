@@ -13,7 +13,7 @@ output "ecs_lb_sg_id" {
   description = "The ID of the security group to attach to load balancers for health checks."
 }
 
-output "ecs_sg_id" {
+output "ecs_instance_sg_id" {
   value       = "${aws_security_group.ecs_boxes.id}"
   description = "the ID of the security group that's attached to all ECS instances."
 }
