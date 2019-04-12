@@ -13,7 +13,7 @@ resource "aws_iam_role" "ecs_role" {
     {
       "Effect": "Allow",
       "Principal": {
-        "Service": "ecs.amazonaws.com"
+        "Service": "ec2.amazonaws.com"
       },
       "Action": "sts:AssumeRole"
     }
@@ -26,5 +26,9 @@ EOF
 # which would just be redundant and dumb.
 resource "aws_iam_role_policy_attachment" "ecs_role_policy_attachment" {
   role       = "${aws_iam_role.ecs_role.name}"
-  policy_arn = "arn:aws:iam::aws:policy/aws-service-role/AmazonECSServiceRolePolicy"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
+
+resource "aws_iam_service_linked_role" "ecs_service" {
+  aws_service_name = "ecs.amazonaws.com"
 }
