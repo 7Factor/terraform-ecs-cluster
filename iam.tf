@@ -31,7 +31,7 @@ resource "aws_iam_role_policy_attachment" "ecs_role_policy_attachment" {
 
 # gives ecs container instances the ability to create cloudwatch assets as needed
 resource "aws_iam_policy" "cloudwatch_access_policy" {
-  name = "cloudwatch-access-policy"
+  name = "${var.ecs_cluster_name}-cloudwatch-access-policy"
 
   policy = <<EOF
 {
