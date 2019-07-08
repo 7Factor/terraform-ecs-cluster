@@ -24,7 +24,7 @@ resource "aws_security_group" "ecs_accessible_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
+  tags = {
     Name = "Allow Load Balancer ECS Access"
   }
 }
@@ -41,7 +41,7 @@ resource "aws_security_group" "ecs_boxes" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
+  tags = {
     Name = "ECS Cluster Instances"
   }
 }

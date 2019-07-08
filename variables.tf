@@ -12,7 +12,7 @@ variable "utility_accessible_sg" {
 }
 
 variable "asg_subnets" {
-  type        = "list"
+  type        = list(string)
   description = "The list of subnet IDs the ASG will launch instances into. These should be private."
 }
 
