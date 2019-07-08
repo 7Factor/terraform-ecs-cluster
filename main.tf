@@ -1,9 +1,11 @@
 terraform {
-  required_version = ">=0.10.7"
+  required_version = ">=0.12.2"
 }
 
 data "aws_ami" "aws_linux_ecs" {
   most_recent = true
+
+  owners = [591542846629]
 
   filter {
     name   = "name"
