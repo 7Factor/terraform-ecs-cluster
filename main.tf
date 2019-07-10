@@ -4,8 +4,7 @@ terraform {
 
 data "aws_ami" "aws_linux_ecs" {
   most_recent = true
-
-  owners = [591542846629]
+  owners      = [591542846629]
 
   filter {
     name   = "name"
