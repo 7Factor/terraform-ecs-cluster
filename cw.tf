@@ -9,10 +9,10 @@ resource "aws_cloudwatch_metric_alarm" "ecs_asg_instances_cpu_high" {
   period              = "300"
   statistic           = "Average"
   threshold           = "80"
-  alarm_actions       = ["${aws_autoscaling_policy.scale_up.arn}"]
+  alarm_actions       = [aws_autoscaling_policy.scale_up.arn]
 
   dimensions = {
-    ClusterName = "${aws_ecs_cluster.the_cluster.name}"
+    ClusterName = aws_ecs_cluster.the_cluster.name
   }
 }
 
@@ -27,10 +27,10 @@ resource "aws_cloudwatch_metric_alarm" "ecs_asg_instances_cpu_low" {
   period              = "300"
   statistic           = "Average"
   threshold           = "5"
-  alarm_actions       = ["${aws_autoscaling_policy.scale_down.arn}"]
+  alarm_actions       = [aws_autoscaling_policy.scale_down.arn]
 
   dimensions = {
-    ClusterName = "${aws_ecs_cluster.the_cluster.name}"
+    ClusterName = aws_ecs_cluster.the_cluster.name
   }
 }
 
@@ -45,10 +45,10 @@ resource "aws_cloudwatch_metric_alarm" "ecs_asg_instances_memory_high" {
   period              = "300"
   statistic           = "Average"
   threshold           = "80"
-  alarm_actions       = ["${aws_autoscaling_policy.scale_down.arn}"]
+  alarm_actions       = [aws_autoscaling_policy.scale_down.arn]
 
   dimensions = {
-    ClusterName = "${aws_ecs_cluster.the_cluster.name}"
+    ClusterName = aws_ecs_cluster.the_cluster.name
   }
 }
 
@@ -63,9 +63,9 @@ resource "aws_cloudwatch_metric_alarm" "ecs_asg_instances_memory_low" {
   period              = "300"
   statistic           = "Average"
   threshold           = "5"
-  alarm_actions       = ["${aws_autoscaling_policy.scale_down.arn}"]
+  alarm_actions       = [aws_autoscaling_policy.scale_down.arn]
 
   dimensions = {
-    ClusterName = "${aws_ecs_cluster.the_cluster.name}"
+    ClusterName = aws_ecs_cluster.the_cluster.name
   }
 }

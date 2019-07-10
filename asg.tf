@@ -7,26 +7,26 @@ ${var.asg_user_data}
 EOF
 
   vars = {
-    cluster_name = "${aws_ecs_cluster.the_cluster.name}"
-    logging = "${var.ecs_logging}"
+    cluster_name = aws_ecs_cluster.the_cluster.name
+    logging = var.ecs_logging
   }
 }
 
 resource "aws_launch_template" "ecs_container_template" {
   name = "${var.ecs_cluster_name}-asg"
-  instance_type = "${var.instance_type}"
-  key_name = "${var.key_name}"
-  image_id = "${data.aws_ami.aws_linux_ecs.id}"
+  instance_type = var.instance_type
+  key_name = var.key_name
+  image_id = data.aws_ami.aws_linux_ecs.id
 
   vpc_security_group_ids = [
-    "${aws_security_group.ecs_boxes.id}",
-    "${var.utility_accessible_sg}",
+    aws_security_group.ecs_boxes.id,
+    var.utility_accessible_sg,
   ]
 
-  user_data = "${base64encode(data.template_file.ecs_cluster_template.rendered)}"
+  user_data = base64encode(data.template_file.ecs_cluster_template.rendered)
 
   iam_instance_profile {
-    name = "${aws_iam_instance_profile.ecs_profile.id}"
+    name = aws_iam_instance_profile.ecs_profile.id
   }
 
   lifecycle {
@@ -37,18 +37,18 @@ resource "aws_launch_template" "ecs_container_template" {
 resource "aws_autoscaling_group" "ecs_asg" {
   name = "${var.ecs_cluster_name}-asg-tmpl-${aws_launch_template.ecs_container_template.latest_version}"
 
-  health_check_grace_period = "${var.health_check_grace_period}"
+  health_check_grace_period = var.health_check_grace_period
   health_check_type = "EC2"
-  desired_capacity = "${var.desired_capacity}"
-  min_size = "${var.min_size}"
-  max_size = "${var.max_size}"
+  desired_capacity = var.desired_capacity
+  min_size = var.min_size
+  max_size = var.max_size
 
   # flatten helps the terraform parser understand that this is a list of strings
   # (even though the type is explicity declared... thanks hashicorp)
-  vpc_zone_identifier = flatten(["${var.asg_subnets}"])
+  vpc_zone_identifier = flatten([var.asg_subnets])
 
   launch_template {
-    id = "${aws_launch_template.ecs_container_template.id}"
+    id = aws_launch_template.ecs_container_template.id
     version = "$$Latest"
   }
 
@@ -66,7 +66,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
 
   tag {
     key = "Cluster"
-    value = "${var.ecs_cluster_name}"
+    value = var.ecs_cluster_name
     propagate_at_launch = true
   }
 }
@@ -76,7 +76,7 @@ resource "aws_autoscaling_policy" "scale_up" {
   scaling_adjustment = 1
   adjustment_type = "ChangeInCapacity"
   cooldown = 300
-  autoscaling_group_name = "${aws_autoscaling_group.ecs_asg.name}"
+  autoscaling_group_name = aws_autoscaling_group.ecs_asg.name
 }
 
 resource "aws_autoscaling_policy" "scale_down" {
@@ -84,5 +84,5 @@ resource "aws_autoscaling_policy" "scale_down" {
   scaling_adjustment = -1
   adjustment_type = "ChangeInCapacity"
   cooldown = 300
-  autoscaling_group_name = "${aws_autoscaling_group.ecs_asg.name}"
+  autoscaling_group_name = aws_autoscaling_group.ecs_asg.name
 }
