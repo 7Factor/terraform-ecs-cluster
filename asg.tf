@@ -49,7 +49,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
 
   launch_template {
     id = aws_launch_template.ecs_container_template.id
-    version = "$$Latest"
+    version = "$Latest"
   }
 
   depends_on = ["aws_launch_template.ecs_container_template"]
