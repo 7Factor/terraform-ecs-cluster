@@ -60,7 +60,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
 
   tag {
     key                 = "Name"
-    value               = "ECS Instance"
+    value               = "${var.ecs_cluster_name} ECS Instance"
     propagate_at_launch = true
   }
 
@@ -69,20 +69,11 @@ resource "aws_autoscaling_group" "ecs_asg" {
     value               = var.ecs_cluster_name
     propagate_at_launch = true
   }
-}
 
-resource "aws_autoscaling_policy" "scale_up" {
-  name                   = "ecs-instances-scale-up"
-  scaling_adjustment     = 1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.ecs_asg.name
-}
-
-resource "aws_autoscaling_policy" "scale_down" {
-  name                   = "ecs-instances-scale-down"
-  scaling_adjustment     = -1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.ecs_asg.name
+  # this tag is extremely important, without it the capacity provider will be unable to find the cluster nodes to scale in/out
+  tag {
+    key                 = "AmazonECSManaged"
+    value               = ""
+    propagate_at_launch = true
+  }
 }

@@ -1,4 +1,4 @@
-// networking config
+# networking config
 variable "vpc_id" {
   description = "The id of your vpc."
 }
@@ -21,7 +21,7 @@ variable "lb_ingress_cidr" {
   description = "CIDR to allow access to this load balancer. Allows white listing of IPs if you need that kind of thing, otherwise it just defaults to erebody."
 }
 
-// auto scaling group config
+# auto scaling group config
 variable "instance_type" {
   default     = "t2.micro"
   description = "The type of ec2 container instance the asg will create. Defaults to t2.micro."
@@ -59,4 +59,30 @@ variable "ecs_logging" {
 variable "asg_user_data" {
   default     = ""
   description = "Adding an option to run arbitrary commands to ECS host startup for package installation."
+}
+
+# capacity provider config
+variable "managed_termination_protection" {
+  description = "Enables or disables container-aware termination of instances in the auto scaling group when scale-in happens. Valid values are ENABLED and DISABLED."
+  default     = "DISABLED"
+}
+
+variable "managed_scaling_maximum_scaling_step_size" {
+  description = "The maximum step adjustment size. A number between 1 and 10,000."
+  default     = 1000
+}
+
+variable "managed_scaling_minimum_scaling_step_size" {
+  description = "The minimum step adjustment size. A number between 1 and 10,000."
+  default     = 1
+}
+
+variable "managed_scaling_status" {
+  description = "Whether auto scaling is managed by ECS. Valid values are ENABLED and DISABLED."
+  default     = "ENABLED"
+}
+
+variable "managed_scaling_target_capacity" {
+  description = "The target utilization for the capacity provider. A number between 1 and 100."
+  default     = 80
 }
