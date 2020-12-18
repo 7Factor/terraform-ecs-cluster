@@ -7,7 +7,7 @@ ${var.asg_user_data}
 EOF
 
   vars = {
-    cluster_name = aws_ecs_cluster.the_cluster.name
+    cluster_name = var.ecs_cluster_name
     logging      = var.ecs_logging
   }
 }
@@ -42,6 +42,9 @@ resource "aws_autoscaling_group" "ecs_asg" {
   desired_capacity          = var.desired_capacity
   min_size                  = var.min_size
   max_size                  = var.max_size
+
+  # This needs to match up to the capacity provider termination protection value, otherwise aws will return an error during the apply step
+  protect_from_scale_in = var.managed_termination_protection == "ENABLED" ? true : false
 
   # flatten helps the terraform parser understand that this is a list of strings
   # (even though the type is explicity declared... thanks hashicorp)

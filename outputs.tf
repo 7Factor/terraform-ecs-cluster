@@ -33,7 +33,7 @@ output "ecs_instance_sg_id" {
   description = "the ID of the security group that's attached to all ECS instances."
 }
 
-output "managed_scaling_target_capacity" {
-  value       = aws_ecs_capacity_provider.primary.auto_scaling_group_provider.managed_scaling.target_capacity
-  description = "The target capacity of the capacity provider."
+output "managed_scaling_target_capacities" {
+  value       = aws_ecs_capacity_provider.primary.auto_scaling_group_provider[*].managed_scaling.target_capacity
+  description = "The target capacities for each capacity provider."
 }

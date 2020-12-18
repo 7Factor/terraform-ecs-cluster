@@ -1,5 +1,6 @@
 resource "aws_ecs_cluster" "the_cluster" {
-  name = var.ecs_cluster_name
+  name               = var.ecs_cluster_name
+  capacity_providers = aws_ecs_capacity_provider.primary[*].name
 }
 
 resource "aws_ecs_capacity_provider" "primary" {
