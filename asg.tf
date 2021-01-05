@@ -7,7 +7,7 @@ ${var.asg_user_data}
 EOF
 
   vars = {
-    cluster_name = aws_ecs_cluster.the_cluster.name
+    cluster_name = var.ecs_cluster_name
     logging      = var.ecs_logging
   }
 }
@@ -43,6 +43,9 @@ resource "aws_autoscaling_group" "ecs_asg" {
   min_size                  = var.min_size
   max_size                  = var.max_size
 
+  # This needs to match up to the capacity provider termination protection value, otherwise aws will return an error during the apply step
+  protect_from_scale_in = var.managed_termination_protection == "ENABLED" ? true : false
+
   # flatten helps the terraform parser understand that this is a list of strings
   # (even though the type is explicity declared... thanks hashicorp)
   vpc_zone_identifier = flatten([var.asg_subnets])
@@ -60,7 +63,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
 
   tag {
     key                 = "Name"
-    value               = "ECS Instance"
+    value               = "${var.ecs_cluster_name} ECS Instance"
     propagate_at_launch = true
   }
 
@@ -69,20 +72,11 @@ resource "aws_autoscaling_group" "ecs_asg" {
     value               = var.ecs_cluster_name
     propagate_at_launch = true
   }
-}
 
-resource "aws_autoscaling_policy" "scale_up" {
-  name                   = "ecs-instances-scale-up"
-  scaling_adjustment     = 1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.ecs_asg.name
-}
-
-resource "aws_autoscaling_policy" "scale_down" {
-  name                   = "ecs-instances-scale-down"
-  scaling_adjustment     = -1
-  adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.ecs_asg.name
+  # this tag is extremely important, without it the capacity provider will be unable to find the cluster nodes to scale in/out
+  tag {
+    key                 = "AmazonECSManaged"
+    value               = ""
+    propagate_at_launch = true
+  }
 }

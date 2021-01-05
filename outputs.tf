@@ -33,32 +33,7 @@ output "ecs_instance_sg_id" {
   description = "the ID of the security group that's attached to all ECS instances."
 }
 
-output "ecs_asg_instances_cpu_high_id" {
-  value = aws_cloudwatch_metric_alarm.ecs_asg_instances_cpu_high.id
-  description = "ID of the cloudwatch alarm. Used mainly for testing."
-}
-
-output "ecs_asg_instances_cpu_low_id" {
-  value = aws_cloudwatch_metric_alarm.ecs_asg_instances_cpu_low.id
-  description = "ID of the cloudwatch alarm. Used mainly for testing."
-}
-
-output "ecs_asg_instances_memory_high_id" {
-  value = aws_cloudwatch_metric_alarm.ecs_asg_instances_memory_high.id
-  description = "ID of the cloudwatch alarm. Used mainly for testing."
-}
-
-output "ecs_asg_instances_memory_low_id" {
-  value = aws_cloudwatch_metric_alarm.ecs_asg_instances_memory_low.id
-  description = "ID of the cloudwatch alarm. Used mainly for testing."
-}
-
-output "autoscaling_up_policy" {
-  value = aws_autoscaling_policy.scale_up.arn
-  description = "The policy arn for scaling up the ASG."
-}
-
-output "autoscaling_down_policy" {
-  value = aws_autoscaling_policy.scale_down.arn
-  description = "The policy arn for scaling down ASG."
+output "managed_scaling_target_capacities" {
+  value       = aws_ecs_capacity_provider.primary.auto_scaling_group_provider[*].managed_scaling.target_capacity
+  description = "The target capacities for each capacity provider."
 }
