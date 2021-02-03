@@ -79,7 +79,7 @@ variable "managed_scaling_minimum_scaling_step_size" {
 
 variable "managed_scaling_status" {
   description = "Whether auto scaling is managed by ECS. Valid values are ENABLED and DISABLED."
-  default     = "ENABLED"
+  default     = "DISABLED"
 }
 
 variable "managed_scaling_target_capacity" {
