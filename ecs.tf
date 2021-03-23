@@ -1,10 +1,14 @@
 resource "aws_ecs_cluster" "the_cluster" {
   name               = var.ecs_cluster_name
   capacity_providers = aws_ecs_capacity_provider.primary[*].name
+
+  default_capacity_provider_strategy {
+    capacity_provider = aws_ecs_capacity_provider.primary.name
+  }
 }
 
 resource "aws_ecs_capacity_provider" "primary" {
-  name = aws_autoscaling_group.ecs_asg.name
+  name = "${var.ecs_cluster_name}-capacity-provider"
 
   auto_scaling_group_provider {
     auto_scaling_group_arn         = aws_autoscaling_group.ecs_asg.arn
