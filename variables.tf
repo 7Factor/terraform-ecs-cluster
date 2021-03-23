@@ -83,6 +83,6 @@ variable "managed_scaling_status" {
 }
 
 variable "managed_scaling_target_capacity" {
-  description = "The target utilization for the capacity provider. A number between 1 and 100."
+  description = "Target capacity that CAS will use in its formula to determine number of instances needed to run all tasks. Note that target values less than 100 enable spare capacity in the ASG. Vist https://aws.amazon.com/blogs/containers/deep-dive-on-amazon-ecs-cluster-auto-scaling/ for more info."
   default     = 80
 }
