@@ -4,7 +4,7 @@ resource "aws_ecs_cluster" "the_cluster" {
 }
 
 resource "aws_ecs_capacity_provider" "primary" {
-  name = aws_autoscaling_group.this.name
+  name = aws_autoscaling_group.ecs_asg.name
 
   auto_scaling_group_provider {
     auto_scaling_group_arn         = aws_autoscaling_group.ecs_asg.arn
