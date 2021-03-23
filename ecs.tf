@@ -4,6 +4,7 @@ resource "aws_ecs_cluster" "the_cluster" {
 
   default_capacity_provider_strategy {
     capacity_provider = aws_ecs_capacity_provider.primary.name
+    weight            = 100
   }
 }
 
