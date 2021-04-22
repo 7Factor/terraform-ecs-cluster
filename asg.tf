@@ -63,18 +63,18 @@ resource "aws_autoscaling_group" "ecs_asg" {
 
   tags = concat(
     var.additional_asg_tags,
-    {
+    [{
       key                 = "Name"
       value               = "${var.ecs_cluster_name} ECS Instance"
       propagate_at_launch = true
-    },
-    {
-      key                 = "Cluster"
-      value               = var.ecs_cluster_name
-      propagate_at_launch = true
-      }, {
-      key                 = "AmazonECSManaged"
-      value               = ""
-      propagate_at_launch = true
-  })
+      },
+      {
+        key                 = "Cluster"
+        value               = var.ecs_cluster_name
+        propagate_at_launch = true
+        }, {
+        key                 = "AmazonECSManaged"
+        value               = ""
+        propagate_at_launch = true
+  }])
 }
