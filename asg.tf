@@ -61,7 +61,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
     create_before_destroy = true
   }
 
-  tags = merge(
+  tags = concat(
     var.additional_asg_tags,
     {
       key                 = "Name"
