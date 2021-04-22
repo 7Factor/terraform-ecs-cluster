@@ -61,22 +61,20 @@ resource "aws_autoscaling_group" "ecs_asg" {
     create_before_destroy = true
   }
 
-  tag {
-    key                 = "Name"
-    value               = "${var.ecs_cluster_name} ECS Instance"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Cluster"
-    value               = var.ecs_cluster_name
-    propagate_at_launch = true
-  }
-
-  # this tag is extremely important, without it the capacity provider will be unable to find the cluster nodes to scale in/out
-  tag {
-    key                 = "AmazonECSManaged"
-    value               = ""
-    propagate_at_launch = true
-  }
+  tags = merge(
+    var.additional_asg_tags,
+    {
+      key                 = "Name"
+      value               = "${var.ecs_cluster_name} ECS Instance"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "Cluster"
+      value               = var.ecs_cluster_name
+      propagate_at_launch = true
+      }, {
+      key                 = "AmazonECSManaged"
+      value               = ""
+      propagate_at_launch = true
+  })
 }

@@ -86,3 +86,9 @@ variable "managed_scaling_target_capacity" {
   description = "Target capacity that CAS will use in its formula to determine number of instances needed to run all tasks. Note that target values less than 100 enable spare capacity in the ASG. Vist https://aws.amazon.com/blogs/containers/deep-dive-on-amazon-ecs-cluster-auto-scaling/ for more info."
   default     = 80
 }
+
+variable "additional_asg_tags" {
+  default     = {}
+  description = "Additional ASG tags for patch groups and such"
+  type        = map(string)
+}
