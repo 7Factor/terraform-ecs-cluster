@@ -90,5 +90,9 @@ variable "managed_scaling_target_capacity" {
 variable "additional_asg_tags" {
   default     = []
   description = "Additional ASG tags for patch groups and such"
-  type        = list(object)
+  type = list(object({
+    key                 = string
+    value               = string
+    propagate_at_launch = bool
+  }))
 }
