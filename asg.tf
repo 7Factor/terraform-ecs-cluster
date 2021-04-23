@@ -18,10 +18,10 @@ resource "aws_launch_template" "ecs_container_template" {
   key_name      = var.key_name
   image_id      = data.aws_ami.aws_linux_ecs.id
 
-  vpc_security_group_ids = [
+  vpc_security_group_ids = compact([
     aws_security_group.ecs_boxes.id,
     var.utility_accessible_sg,
-  ]
+  ])
 
   user_data = base64encode(data.template_file.ecs_cluster_template.rendered)
 
