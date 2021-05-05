@@ -48,7 +48,7 @@ locals {
         propagate_at_launch = true
         }, {
         key                 = "AmazonECSManaged"
-        value               = ""
+        value               = "ignored"
         propagate_at_launch = true
   }])
 }
