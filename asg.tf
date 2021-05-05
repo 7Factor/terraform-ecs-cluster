@@ -34,6 +34,25 @@ resource "aws_launch_template" "ecs_container_template" {
   }
 }
 
+locals {
+  tags = concat(
+    var.additional_asg_tags,
+    [{
+      key                 = "Name"
+      value               = "${var.ecs_cluster_name} ECS Instance"
+      propagate_at_launch = true
+      },
+      {
+        key                 = "Cluster"
+        value               = var.ecs_cluster_name
+        propagate_at_launch = true
+        }, {
+        key                 = "AmazonECSManaged"
+        value               = ""
+        propagate_at_launch = true
+  }])
+}
+
 resource "aws_autoscaling_group" "ecs_asg" {
   name = "${var.ecs_cluster_name}-asg-tmpl-${aws_launch_template.ecs_container_template.latest_version}"
 
@@ -61,20 +80,12 @@ resource "aws_autoscaling_group" "ecs_asg" {
     create_before_destroy = true
   }
 
-  tags = concat(
-    var.additional_asg_tags,
-    [{
-      key                 = "Name"
-      value               = "${var.ecs_cluster_name} ECS Instance"
-      propagate_at_launch = true
-      },
-      {
-        key                 = "Cluster"
-        value               = var.ecs_cluster_name
-        propagate_at_launch = true
-        }, {
-        key                 = "AmazonECSManaged"
-        value               = ""
-        propagate_at_launch = true
-  }])
+  dynamic "tag" {
+    for_each = local.tags
+    content {
+      key                 = tag.value["key"]
+      value               = tag.value["value"]
+      propagate_at_launch = tag.value["propagate_at_launch"]
+    }
+  }
 }
