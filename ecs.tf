@@ -22,8 +22,4 @@ resource "aws_ecs_capacity_provider" "primary" {
       target_capacity           = var.managed_scaling_target_capacity
     }
   }
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }

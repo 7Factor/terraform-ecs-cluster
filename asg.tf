@@ -77,6 +77,7 @@ resource "aws_autoscaling_group" "ecs_asg" {
   depends_on = [aws_launch_template.ecs_container_template]
 
   lifecycle {
+    ignore_changes = [desired_capacity]
     create_before_destroy = true
   }
 
