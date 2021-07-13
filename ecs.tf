@@ -6,6 +6,10 @@ resource "aws_ecs_cluster" "the_cluster" {
     capacity_provider = aws_ecs_capacity_provider.primary.name
     weight            = 100
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_ecs_capacity_provider" "primary" {
