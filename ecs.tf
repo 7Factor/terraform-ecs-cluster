@@ -13,7 +13,7 @@ resource "aws_ecs_cluster" "the_cluster" {
 }
 
 resource "aws_ecs_capacity_provider" "primary" {
-  name = aws_autoscaling_group.ecs_asg.name
+  name = "cp-${md5(join(var.managed_scaling_maximum_scaling_step_size, var.managed_scaling_maximum_scaling_step_size, var.managed_scaling_target_capacity, var.managed_scaling_status, var.managed_termination_protection))}"
 
   auto_scaling_group_provider {
     auto_scaling_group_arn         = aws_autoscaling_group.ecs_asg.arn
@@ -25,5 +25,12 @@ resource "aws_ecs_capacity_provider" "primary" {
       status                    = var.managed_scaling_status
       target_capacity           = var.managed_scaling_target_capacity
     }
+  }
+
+  # Force these dependencies because cap providers are frustrating.
+  depends_on = [aws_autoscaling_group.ecs_asg, aws_ecs_cluster.the_cluster]
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
