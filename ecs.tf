@@ -13,7 +13,7 @@ resource "aws_ecs_cluster" "the_cluster" {
 }
 
 resource "aws_ecs_capacity_provider" "primary" {
-  name = "cp-${md5(join("", [tostring(var.managed_scaling_maximum_scaling_step_size), tostring(var.managed_scaling_maximum_scaling_step_size), tostring(var.managed_scaling_target_capacity), var.managed_scaling_status, tostring(var.managed_termination_protection)]))}"
+  name = "cp-${var.ecs_cluster_name}-${md5(join("", [tostring(var.managed_scaling_maximum_scaling_step_size), tostring(var.managed_scaling_maximum_scaling_step_size), tostring(var.managed_scaling_target_capacity), var.managed_scaling_status, tostring(var.managed_termination_protection)]))}"
 
   auto_scaling_group_provider {
     auto_scaling_group_arn         = aws_autoscaling_group.ecs_asg.arn
