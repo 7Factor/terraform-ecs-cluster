@@ -27,9 +27,6 @@ resource "aws_ecs_capacity_provider" "primary" {
     }
   }
 
-  # Force these dependencies because cap providers are frustrating.
-  depends_on = [aws_autoscaling_group.ecs_asg]
-
   lifecycle {
     create_before_destroy = true
   }
