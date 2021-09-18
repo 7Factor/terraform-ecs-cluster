@@ -58,3 +58,9 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_access_policy_attachment" 
   role       = aws_iam_role.ecs_role.name
   policy_arn = aws_iam_policy.cloudwatch_access_policy.arn
 }
+
+# for sending raw emails with the AWS CLI from an EC2 instance
+resource "aws_iam_role_policy_attachment" "ses_full_access_attachment" {
+  role       = aws_iam_role.ecs_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSESFullAccess"
+}
