@@ -29,6 +29,16 @@ resource "aws_iam_role_policy_attachment" "ecs_role_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
 
+data "aws_iam_policy" "aws_ssm_default" {
+  name = "AmazonSSMManagedInstanceCore"
+}
+
+# Add SSM for patching
+resource "aws_iam_role_policy_attachment" "add_ssm_for_patching" {
+  role       = aws_iam_role.ecs_role.name
+  policy_arn = data.aws_iam_policy.aws_ssm_default.arn
+}
+
 # gives ecs container instances the ability to create cloudwatch assets as needed
 resource "aws_iam_policy" "cloudwatch_access_policy" {
   name = "${var.ecs_cluster_name}-cloudwatch-access-policy"
