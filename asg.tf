@@ -46,7 +46,13 @@ locals {
         key                 = "Cluster"
         value               = var.ecs_cluster_name
         propagate_at_launch = true
-        }, {
+      },
+      {
+        key                 = "Patch Group"
+        value               = local.ecs_patch_group_name
+        propagate_at_launch = true
+      },
+      {
         key                 = "AmazonECSManaged"
         value               = "ignored"
         propagate_at_launch = true

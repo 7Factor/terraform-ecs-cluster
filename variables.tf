@@ -96,3 +96,13 @@ variable "additional_asg_tags" {
     propagate_at_launch = bool
   }))
 }
+
+variable "ecs_patch_schedule" {
+  default     = "cron(0 0 * * ? *)"
+  description = "The frequency to patch the cluster. Defaults to midnight."
+}
+
+variable "schedule_timezone" {
+  default     = "America/New_York"
+  description = "The timezone inside of which to run the patch windows. Defaults to US eastern."
+}
