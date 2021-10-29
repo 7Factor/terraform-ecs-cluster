@@ -1,10 +1,10 @@
 resource "aws_iam_instance_profile" "ecs_profile" {
-  name = "${var.ecs_cluster_name}-profile"
+  name = "${replace(lower(var.ecs_cluster_name), " ", "-")}-profile"
   role = aws_iam_role.ecs_role.name
 }
 
 resource "aws_iam_role" "ecs_role" {
-  name = "RoleForECSCluster-${var.ecs_cluster_name}"
+  name = "${replace(var.ecs_cluster_name, " ", "")}RoleForECSCluster"
 
   assume_role_policy = <<EOF
 {
@@ -45,7 +45,7 @@ resource "aws_iam_role_policy_attachment" "add_ssm_for_patching" {
 
 # gives ecs container instances the ability to create cloudwatch assets as needed
 resource "aws_iam_policy" "cloudwatch_access_policy" {
-  name = "${var.ecs_cluster_name}-cloudwatch-access-policy"
+  name = "${replace(lower(var.ecs_cluster_name), " ", "-")}-cloudwatch-access-policy"
 
   policy = <<EOF
 {

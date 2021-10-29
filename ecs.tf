@@ -13,7 +13,7 @@ resource "aws_ecs_cluster" "the_cluster" {
 }
 
 resource "aws_ecs_capacity_provider" "primary" {
-  name = "cp-${var.ecs_cluster_name}"
+  name = "cp-${replace(lower(var.ecs_cluster_name), " ", "-")}"
 
   auto_scaling_group_provider {
     auto_scaling_group_arn         = aws_autoscaling_group.ecs_asg.arn

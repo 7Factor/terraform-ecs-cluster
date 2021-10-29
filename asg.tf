@@ -13,7 +13,7 @@ EOF
 }
 
 resource "aws_launch_template" "ecs_container_template" {
-  name          = "${var.ecs_cluster_name}-asg"
+  name          = "${replace(lower(var.ecs_cluster_name), " ", "-")}-asg"
   instance_type = var.instance_type
   key_name      = var.key_name
   image_id      = data.aws_ami.aws_linux_ecs.id
@@ -60,7 +60,7 @@ locals {
 }
 
 resource "aws_autoscaling_group" "ecs_asg" {
-  name = "${var.ecs_cluster_name}-asg-tmpl-${aws_launch_template.ecs_container_template.latest_version}"
+  name = "${replace(lower(var.ecs_cluster_name), " ", "-")}-asg-tmpl-${aws_launch_template.ecs_container_template.latest_version}"
 
   health_check_grace_period = var.health_check_grace_period
   health_check_type         = "EC2"
