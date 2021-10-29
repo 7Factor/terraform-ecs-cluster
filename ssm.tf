@@ -6,7 +6,7 @@ data "aws_ssm_patch_baseline" "centos_patch_baseline" {
 }
 
 locals {
-  ecs_patch_group_name = "ecs-instance"
+  ecs_patch_group_name = "${var.ecs_cluster_name} ECS Instance"
 }
 
 # Keeping patch groups together with this locals block to reduce confusion.
