@@ -25,6 +25,15 @@ resource "aws_launch_template" "ecs_container_template" {
 
   user_data = base64encode(data.template_file.ecs_cluster_template.rendered)
 
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      encrypted   = true
+      volume_size = var.instance_ebs_volume_size
+      volume_type = var.instance_ebs_volume_type
+    }
+  }
+
   iam_instance_profile {
     name = aws_iam_instance_profile.ecs_profile.id
   }
@@ -67,9 +76,6 @@ resource "aws_autoscaling_group" "ecs_asg" {
   desired_capacity          = var.desired_capacity
   min_size                  = var.min_size
   max_size                  = var.max_size
-
-  # This needs to match up to the capacity provider termination protection value, otherwise aws will return an error during the apply step
-  protect_from_scale_in = var.managed_termination_protection == "ENABLED" ? true : false
 
   # flatten helps the terraform parser understand that this is a list of strings
   # (even though the type is explicity declared... thanks hashicorp)

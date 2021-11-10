@@ -61,30 +61,14 @@ variable "asg_user_data" {
   description = "Adding an option to run arbitrary commands to ECS host startup for package installation."
 }
 
-# capacity provider config
-variable "managed_termination_protection" {
-  description = "Enables or disables container-aware termination of instances in the auto scaling group when scale-in happens. Valid values are ENABLED and DISABLED."
-  default     = "DISABLED"
+variable "instance_ebs_volume_size" {
+  default     = 50
+  description = "The size for the root volume for the ECS instances. Defaults to 50."
 }
 
-variable "managed_scaling_maximum_scaling_step_size" {
-  description = "The maximum step adjustment size. A number between 1 and 10,000."
-  default     = 1000
-}
-
-variable "managed_scaling_minimum_scaling_step_size" {
-  description = "The minimum step adjustment size. A number between 1 and 10,000."
-  default     = 1
-}
-
-variable "managed_scaling_status" {
-  description = "Whether auto scaling is managed by ECS. Valid values are ENABLED and DISABLED."
-  default     = "DISABLED"
-}
-
-variable "managed_scaling_target_capacity" {
-  description = "Target capacity that CAS will use in its formula to determine number of instances needed to run all tasks. Note that target values less than 100 enable spare capacity in the ASG. Vist https://aws.amazon.com/blogs/containers/deep-dive-on-amazon-ecs-cluster-auto-scaling/ for more info."
-  default     = 80
+variable "instance_ebs_volume_type" {
+  default     = "gp2"
+  description = "The volume type. Defaults to gp2."
 }
 
 variable "additional_asg_tags" {
