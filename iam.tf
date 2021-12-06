@@ -4,7 +4,7 @@ resource "aws_iam_instance_profile" "ecs_profile" {
 }
 
 resource "aws_iam_role" "ecs_role" {
-  name = "${replace(var.ecs_cluster_name, " ", "")}RoleForECSCluster"
+  name = "RoleForECSCluster-${replace(var.ecs_cluster_name, " ", "")}"
 
   assume_role_policy = <<EOF
 {
