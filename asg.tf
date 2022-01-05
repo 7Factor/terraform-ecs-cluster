@@ -1,17 +1,3 @@
-data "template_file" "ecs_cluster_template" {
-  template = <<EOF
-#!/bin/bash
-sudo /bin/su -c 'echo ECS_CLUSTER=$${cluster_name} >> /etc/ecs/ecs.config'
-sudo /bin/su -c 'echo ECS_AVAILABLE_LOGGING_DRIVERS="$${logging}" >> /etc/ecs/ecs.config'
-${var.asg_user_data}
-EOF
-
-  vars = {
-    cluster_name = var.ecs_cluster_name
-    logging      = var.ecs_logging
-  }
-}
-
 resource "aws_launch_template" "ecs_container_template" {
   name          = "${replace(lower(var.ecs_cluster_name), " ", "-")}-asg"
   instance_type = var.instance_type
@@ -23,7 +9,11 @@ resource "aws_launch_template" "ecs_container_template" {
     var.utility_accessible_sg,
   ])
 
-  user_data = base64encode(data.template_file.ecs_cluster_template.rendered)
+  user_data = base64encode(templatefile("${path.module}/ecs_cluster.tftpl", {
+    cluster_name  = var.ecs_cluster_name
+    logging       = var.ecs_logging
+    asg_user_data = var.asg_user_data
+  }))
 
   block_device_mappings {
     device_name = "/dev/xvda"
@@ -45,27 +35,29 @@ resource "aws_launch_template" "ecs_container_template" {
 
 locals {
   tags = concat(
-    var.additional_asg_tags,
-    [{
+  var.additional_asg_tags,
+  [
+    {
       key                 = "Name"
       value               = "${var.ecs_cluster_name} ECS Instance"
       propagate_at_launch = true
-      },
-      {
-        key                 = "Cluster"
-        value               = var.ecs_cluster_name
-        propagate_at_launch = true
-      },
-      {
-        key                 = "Patch Group"
-        value               = local.ecs_patch_group_name
-        propagate_at_launch = true
-      },
-      {
-        key                 = "AmazonECSManaged"
-        value               = "ignored"
-        propagate_at_launch = true
-  }])
+    },
+    {
+      key                 = "Cluster"
+      value               = var.ecs_cluster_name
+      propagate_at_launch = true
+    },
+    {
+      key                 = "Patch Group"
+      value               = local.ecs_patch_group_name
+      propagate_at_launch = true
+    },
+    {
+      key                 = "AmazonECSManaged"
+      value               = "ignored"
+      propagate_at_launch = true
+    }
+  ])
 }
 
 resource "aws_autoscaling_group" "ecs_asg" {
