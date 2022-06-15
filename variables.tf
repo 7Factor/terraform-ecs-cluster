@@ -7,6 +7,11 @@ variable "ecs_cluster_name" {
   description = "The name of your ECS cluster."
 }
 
+variable "ecs_cluster_name_suffix" {
+  default     = " ECS Instance"
+  description = "The suffix of your ECS cluster, default is ECS instance."
+}
+
 variable "utility_accessible_sg" {
   description = "Pass in the ID of your access security group here."
 }
