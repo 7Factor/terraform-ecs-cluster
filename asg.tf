@@ -35,28 +35,28 @@ resource "aws_launch_template" "ecs_container_template" {
 
 locals {
   tags = concat(
-  var.additional_asg_tags,
-  [
-    {
-      key                 = "Name"
-      value               = "${var.ecs_cluster_name} ECS Instance"
-      propagate_at_launch = true
-    },
-    {
-      key                 = "Cluster"
-      value               = var.ecs_cluster_name
-      propagate_at_launch = true
-    },
-    {
-      key                 = "Patch Group"
-      value               = local.ecs_patch_group_name
-      propagate_at_launch = true
-    },
-    {
-      key                 = "AmazonECSManaged"
-      value               = "ignored"
-      propagate_at_launch = true
-    }
+    var.additional_asg_tags,
+    [
+      {
+        key                 = "Name"
+        value               = "${var.ecs_cluster_name}${var.ecs_cluster_name_suffix}"
+        propagate_at_launch = true
+      },
+      {
+        key                 = "Cluster"
+        value               = var.ecs_cluster_name
+        propagate_at_launch = true
+      },
+      {
+        key                 = "Patch Group"
+        value               = local.ecs_patch_group_name
+        propagate_at_launch = true
+      },
+      {
+        key                 = "AmazonECSManaged"
+        value               = "ignored"
+        propagate_at_launch = true
+      }
   ])
 }
 
