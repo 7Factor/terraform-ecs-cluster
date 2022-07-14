@@ -1,6 +1,5 @@
 # Terraform state
 .terraform
-.terraform.*
 terraform.tfstate
 terraform.tfstate.backup
 
